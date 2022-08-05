@@ -40,4 +40,38 @@ module.exports={
         
         
     },
+
+    deletePosting:async(req,res)=>{
+        console.log(req.params)
+        try {
+            await dbQuery(`DELETE from posting where idposting = ${req.params.id}`)
+
+            res.status(200).send({
+                success: true,
+                message:'Posting deleted'
+            })
+            
+        } catch (error) {
+            res.status(500).send(error)
+            
+        }
+    },
+
+    editPosting:async(req,res)=>{
+        try {
+            let newData =[]
+            Object.keys(req.body).forEach(val =>{
+                newData.push(`${val}=${dbConf.escape(req.body[val])}`)
+            })
+            await dbQuery(`UPDATE posting set ${newData.join(',')}where idposting=${req.params.id}`)
+            res.status(200).send({
+                success:true,
+                message:'Caption Updated'
+            })
+            
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
+    }
 }
