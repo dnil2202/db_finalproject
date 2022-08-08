@@ -6,6 +6,8 @@ const cors = require('cors')
 const PORT=process.env.PORT;
 const bearerToken = require('express-bearer-token')
 
+
+
 // untuk bisa redirect public
 app.use(express.static('public'))
 //

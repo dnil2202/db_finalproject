@@ -1,5 +1,6 @@
 const {dbConf, dbQuery}=require('../config/db');
 const {hashPassword, createToken}=require('../confiG/encript')
+const { transport } = require('../config/nodemailer');
 
 
 module.exports={
@@ -15,24 +16,41 @@ module.exports={
         })
 
     },
-    register:(req,res)=>{
+    register:async(req,res)=>{
         console.log(req.body)
-        let {fullname, username, email, password}=req.body
-        dbConf.query(`INSERT INTO USERS (fullname,username,email,password)
-        values(${dbConf.escape(fullname)},${dbConf.escape(username)},
-        ${dbConf.escape(email)},${dbConf.escape(hashPassword(password))});`,
-        (err,results)=>{
-            if (err) {
-                console.log('Error query SQL :', err);
-                res.status(500).send(err);
+        try {
+            let {fullname, username, email, password}=req.body;
+
+            let sqlInsert = await dbQuery(`INSERT INTO USERS (fullname,username,email,password)
+            values(${dbConf.escape(fullname)},${dbConf.escape(username)},
+            ${dbConf.escape(email)},${dbConf.escape(hashPassword(password))});`)
+
+            if(sqlInsert.insertId){
+                let sqlGet=await dbQuery(`Select idusers, email, status_id from users where idusers=${sqlInsert.insertId}`)
+                
+                // Generate Token
+                let token = createToken({...sqlGet[0]}, '1h')
+
+                // Mengirimkan Email
+                await transport.sendMail({
+                    from :'SOSMED ADMIN',
+                    to:sqlGet[0].email,
+                    subject:'verification email account',
+                    html:`<div>
+                    <h3> Click Link below</h3>
+                    <a href='${process.env.FE_URL}/verification/${token}'>Verified Account</a>
+                    </div>`
+                })
+                res.status(200).send({
+                    success: true,
+                    message: 'Register Success'
+                })
             }
 
-            res.status(200).send({
-                success: true,
-                message: 'Register Success'
-            })
-        })
-
+        } catch (error) {
+            console.log('Error query SQL :', error);
+            res.status(500).send(error);
+        }
     },
     login:(req,res)=>{
         console.log(req.body)
@@ -81,6 +99,47 @@ module.exports={
         } catch (error) {
             console.log('ERROR QUERY SQL :', error);
             res.status(500).send(error)
+        }
+    },
+
+    verification : async(req,res)=>{
+        try {
+            if(req.dataToken.idusers){
+                // update status user
+                await dbQuery(`UPDATE users set status_id=1 WHERE idusers=${dbConf.escape(req.dataToken.idusers)}`)
+                // proses login
+                let resultUser = await dbQuery(`Select u.idusers, u.fullname, u.username, u.email, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
+                Where idusers = ${dbConf.escape(req.dataToken.idusers)}
+                `)
+                if(resultUser.length > 0){
+                    // 3. login berhasil, maka buar token baru
+                    let token = createToken({...resultUser[0]})
+                    res.status(200).send({
+                        success :true,
+                        message:'Login Success',
+                        dataLogin :{
+                            ...resultUser[0],
+                            token
+                        },
+                        error:''
+                    })
+                }
+                
+            }else {
+                res.status(401).send({
+                    success: false,
+                    messages: "Verify Failed ❌",
+                    dataLogin: {},
+                    error: ""
+                })
+            }
+        } catch (error) {
+            console.log(error)
+            res.status(500).send({
+                success: false,
+                message: "Failed ❌",
+                error
+            });
         }
     }
 

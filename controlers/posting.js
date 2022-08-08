@@ -4,20 +4,10 @@ const fs = require('fs')
 module.exports={
     getDataPosting : async (req,res)=>{
         try {
-            let result = await dbQuery(`Select 
-            p.idposting,
-            p.images,
-            p.caption,
-            c.comment,
-            u.fullname as user_name_comment,
-            x.fullname as user_name_post
-        From posting p
-        left join comment c
-        on p.idposting=c.posting_id
-        left join users u
-        on u.idusers=c.user_comment_id
-        left join users x
-        on x.idusers = p.user_id;`)
+            let result = await dbQuery(`select p.idposting, p.images, p.caption,p.add_date, x.username as user_name_post
+            from posting p
+            left join users x
+            on x.idusers = p.user_id;`)
         res.status(200).send(result)
     
         } catch (error) {
