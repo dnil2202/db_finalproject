@@ -1,5 +1,5 @@
 const express = require('express');
-const { uploader } = require('../config/upload_posing');
+const { uploader } = require('../config/upload');
 const {postingController}= require('../controlers');
 const route = express.Router();
 

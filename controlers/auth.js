@@ -1,6 +1,7 @@
 const {dbConf, dbQuery}=require('../config/db');
 const {hashPassword, createToken}=require('../confiG/encript')
 const { transport } = require('../config/nodemailer');
+const fs = require('fs')
 
 
 module.exports={
@@ -14,23 +15,19 @@ module.exports={
             console.log('Result sql',results)
             res.status(200).send(results)
         })
-
     },
+
     register:async(req,res)=>{
         console.log(req.body)
         try {
             let {fullname, username, email, password}=req.body;
-
             let sqlInsert = await dbQuery(`INSERT INTO USERS (fullname,username,email,password)
             values(${dbConf.escape(fullname)},${dbConf.escape(username)},
             ${dbConf.escape(email)},${dbConf.escape(hashPassword(password))});`)
-
             if(sqlInsert.insertId){
                 let sqlGet=await dbQuery(`Select idusers, email, status_id from users where idusers=${sqlInsert.insertId}`)
-                
                 // Generate Token
                 let token = createToken({...sqlGet[0]}, '1h')
-
                 // Mengirimkan Email
                 await transport.sendMail({
                     from :'SOSMED ADMIN',
@@ -46,17 +43,17 @@ module.exports={
                     message: 'Register Success'
                 })
             }
-
         } catch (error) {
             console.log('Error query SQL :', error);
             res.status(500).send(error);
         }
     },
+
     login:(req,res)=>{
         console.log(req.body)
         let {email,password}=req.body
         console.log('req ',password)
-        dbConf.query(`Select u.idusers, u.fullname, u.username, u.email, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
+        dbConf.query(`Select u.idusers, u.fullname, u.username, u.email, u.images, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
         WHERE u.email = ${dbConf.escape(email)}
         and u.password=${dbConf.escape(hashPassword(password))}`, (err,results)=>{
             if(err){
@@ -80,9 +77,10 @@ module.exports={
         })
 
     },
+
     keepLogin:async (req,res)=>{
         try {
-            let resultsUser = await dbQuery(`Select u.idusers, u.fullname, u.username, u.email, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
+            let resultsUser = await dbQuery(`Select u.idusers, u.fullname, u.username, u.email, u.images, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
             WHERE u.idusers=${dbConf.escape(req.dataToken.idusers)}`)
 
             if(resultsUser.length >0){
@@ -141,6 +139,24 @@ module.exports={
                 error
             });
         }
-    }
+    },
 
+    editProfile: async(req,res)=>{
+        try {
+            let data = JSON.parse(req.body.data)
+            let dataInput = []
+            for (const key in data) {
+                dataInput.push(`${key}=${dbConf.escape(data[key])}`)
+            }
+            dataInput.push(`images =${dbConf.escape(`/img_profile${req.files[0].filename}`)}`)
+            console.log('data',dataInput.join(','))
+            await dbQuery(`UPDATE users set ${dataInput.join(',')}where idusers =${req.params.id}`)
+            res.status(200).send({
+                success:true,
+                message:'Picture Uploaded'
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    },
 }

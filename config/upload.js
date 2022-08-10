@@ -1,4 +1,4 @@
-const multer = require('multer');
+var multer = require('multer');
 const fs = require('fs');
 
 module.exports={

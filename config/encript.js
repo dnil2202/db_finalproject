@@ -1,6 +1,5 @@
 const Crypto = require('crypto');
 const jwt = require('jsonwebtoken');
-const { decode } = require('punycode');
 
 module.exports={
     hashPassword:(pass)=>{
