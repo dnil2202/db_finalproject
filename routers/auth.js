@@ -13,5 +13,6 @@ route.post('/regis',authController.register);
 route.get('/keep',readToken, authController.keepLogin)
 route.patch('/verified',readToken,authController.verification)
 route.patch('/all/:id',upload,authController.editProfile)
+route.post ('/resend',authController.resendEmail)
 
 module.exports=route;

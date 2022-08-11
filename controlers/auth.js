@@ -123,13 +123,6 @@ module.exports={
                     })
                 }
                 
-            }else {
-                res.status(401).send({
-                    success: false,
-                    messages: "Verify Failed ❌",
-                    dataLogin: {},
-                    error: ""
-                })
             }
         } catch (error) {
             console.log(error)
@@ -138,6 +131,34 @@ module.exports={
                 message: "Failed ❌",
                 error
             });
+        }
+    },
+
+    resendEmail : async(req,res)=>{
+        try {
+            let {email}=req.body;
+            let sqlInsert = await dbQuery(`Select idusers, email, status_id  From users WHERE email =${dbConf.escape(email)}`)
+            console.log(sqlInsert)
+                // Generate Token
+                let token = createToken({...sqlInsert[0]}, '1h')
+                // Mengirimkan Email
+                await transport.sendMail({
+                    from :'SOSMED ADMIN',
+                    to:sqlInsert[0].email,
+                    subject:'verification email account',
+                    html:`<div>
+                    <h3> Click Link below</h3>
+                    <a href='${process.env.FE_URL}/verification/${token}'>Verified Account</a>
+                    </div>`
+                })
+                res.status(200).send({
+                    success: true,
+                    message: 'Register Success'
+                })
+            
+        } catch (error) {
+            console.log('Error query SQL :', error);
+            res.status(500).send(error);
         }
     },
 
@@ -158,5 +179,5 @@ module.exports={
         } catch (error) {
             console.log(error)
         }
-    },
+    }
 }
