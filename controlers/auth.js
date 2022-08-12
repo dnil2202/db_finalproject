@@ -61,33 +61,34 @@ module.exports={
         }
     },
 
-    login:(req,res)=>{
-        console.log(req.body)
-        let {email,password}=req.body
-        console.log('req ',password)
-        dbConf.query(`Select u.idusers, u.fullname, u.username, u.email, u.images, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
-        WHERE ${dbConf.escape(email).includes('@') && dbConf.escape(email).includes('.co')?`u.email = ${dbConf.escape(email)} or u.username =''`: 
-        `u.username = ${dbConf.escape(email)} or u.email=''` } 
-        and u.password=${dbConf.escape(hashPassword(password))}`, (err,results)=>{
-            if(err){
-                console.log('Error SQL:', err)
-                res.status(500).send(err)
-            }
-            dbConf.query(`Select u.idusers, p.idposting, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
-            WHERE u.idusers = ${dbConf.escape(results[0].idusers)};`, (errPost,resultsPost)=>{
-                if(errPost){
-                    console.log('ERROR QUERY SQL :', errPost);
-                    res.status(500).send(errPost)
-                }
-                let token = createToken({...results[0]})
-                res.status(200).send({
-                    ...results[0],
+    login:async(req,res)=>{
+        try {
+            console.log(req.body)
+            let {email,password}=req.body
+            let loginUser = await dbQuery(`Select u.idusers, u.fullname, u.username, u.email, u.images, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
+            WHERE ${dbConf.escape(email).includes('@') && dbConf.escape(email).includes('.co')?`u.email = ${dbConf.escape(email)}`: 
+            `u.username = ${dbConf.escape(email)}` } 
+            and u.password=${dbConf.escape(hashPassword(password))}`)
+
+            if(loginUser.length >0){
+             let resultsPost =await dbQuery(`Select u.idusers, p.idposting, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
+             WHERE u.idusers = ${dbConf.escape(loginUser[0].idusers)};`)
+             let token = createToken({...loginUser[0]})
+             res.status(200).send({
+                    ...loginUser[0],
                     posting:resultsPost,
                     token
                 })
-            })
-            console.log(results[0].idusers)
-        })
+            }else{
+                res.status(500).send({
+                    status:false,
+                    message:'Wrong Data'
+                })
+            }
+        } catch (error) {
+            console.log('ERROR QUERY SQL :', error);
+            res.status(500).send(error)
+        }
 
     },
 

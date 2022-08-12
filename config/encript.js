@@ -6,10 +6,11 @@ module.exports={
         return Crypto.createHmac('sha256','SOSMED123').update(pass).digest('hex');
     },
 
-    createToken :(payload)=>{
+    createToken :(payload,expiresIn='24h')=>{
         return jwt.sign(payload, 'sosmed',{
-            expiresIn:'1h'
+            expiresIn
         })
+        
     },
 
     readToken :(req,res,next)=>{
