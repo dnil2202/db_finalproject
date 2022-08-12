@@ -54,7 +54,8 @@ module.exports={
         let {email,password}=req.body
         console.log('req ',password)
         dbConf.query(`Select u.idusers, u.fullname, u.username, u.email, u.images, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
-        WHERE u.email = ${dbConf.escape(email)}
+        WHERE ${dbConf.escape(email).includes('@') && dbConf.escape(email).includes('.co')?`u.email = ${dbConf.escape(email)} or u.username =''`: 
+        `u.username = ${dbConf.escape(email)} or u.email=''` } 
         and u.password=${dbConf.escape(hashPassword(password))}`, (err,results)=>{
             if(err){
                 console.log('Error SQL:', err)
