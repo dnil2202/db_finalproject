@@ -21,27 +21,39 @@ module.exports={
         console.log(req.body)
         try {
             let {fullname, username, email, password}=req.body;
-            let sqlInsert = await dbQuery(`INSERT INTO USERS (fullname,username,email,password)
-            values(${dbConf.escape(fullname)},${dbConf.escape(username)},
-            ${dbConf.escape(email)},${dbConf.escape(hashPassword(password))});`)
-            if(sqlInsert.insertId){
-                let sqlGet=await dbQuery(`Select idusers, email, status_id from users where idusers=${sqlInsert.insertId}`)
-                // Generate Token
-                let token = createToken({...sqlGet[0]}, '1h')
-                // Mengirimkan Email
-                await transport.sendMail({
-                    from :'SOSMED ADMIN',
-                    to:sqlGet[0].email,
-                    subject:'verification email account',
-                    html:`<div>
-                    <h3> Click Link below</h3>
-                    <a href='${process.env.FE_URL}/verification/${token}'>Verified Account</a>
-                    </div>`
+            let availableEmail = await dbQuery(`Select email from users where email = ${dbConf.escape(email)}`)
+            let availableUsername = await dbQuery(`Select username from users where username = ${dbConf.escape(username)}`)
+            console.log('email',availableEmail.length)
+            if(availableEmail.length <= 0 && availableUsername  <=0 ){
+                let sqlInsert = await dbQuery(`INSERT INTO USERS (fullname,username,email,password)
+                values(${dbConf.escape(fullname)},${dbConf.escape(username)},
+                ${dbConf.escape(email)},${dbConf.escape(hashPassword(password))});`)
+                if(sqlInsert.insertId){
+                    let sqlGet=await dbQuery(`Select idusers, email, status_id from users where idusers=${sqlInsert.insertId}`)
+                    // Generate Token
+                    let token = createToken({...sqlGet[0]}, '1h')
+                    // Mengirimkan Email
+                    await transport.sendMail({
+                        from :'SOSMED ADMIN',
+                        to:sqlGet[0].email,
+                        subject:'verification email account',
+                        html:`<div>
+                        <h3> Click Link below</h3>
+                        <a href='${process.env.FE_URL}/verification/${token}'>Verified Account</a>
+                        </div>`
+                    })
+                    res.status(200).send({
+                        success: true,
+                        message: 'Register Success'
+                    })
+                }
+            }
+            else{
+                res.status(401).send({
+                    success : false,
+                    message:'Email or Username used'
                 })
-                res.status(200).send({
-                    success: true,
-                    message: 'Register Success'
-                })
+                
             }
         } catch (error) {
             console.log('Error query SQL :', error);
@@ -123,7 +135,6 @@ module.exports={
                         error:''
                     })
                 }
-                
             }
         } catch (error) {
             console.log(error)
