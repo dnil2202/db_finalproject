@@ -67,7 +67,7 @@ module.exports={
             let {email,password}=req.body
             let loginUser = await dbQuery(`Select u.idusers, u.fullname, u.username, u.email, u.images, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
             WHERE ${dbConf.escape(email).includes('@') && dbConf.escape(email).includes('.co')?`u.email = ${dbConf.escape(email)}`: 
-            `u.username = ${dbConf.escape(email)}` } 
+            `u.username = ${dbConf.escape(email)}`} 
             and u.password=${dbConf.escape(hashPassword(password))}`)
 
             if(loginUser.length >0){
@@ -82,7 +82,7 @@ module.exports={
             }else{
                 res.status(500).send({
                     status:false,
-                    message:'Wrong Data'
+                    message:`The username you entered doesn't belong to an account. Please check your username and try again.`
                 })
             }
         } catch (error) {
