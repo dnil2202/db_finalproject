@@ -4,32 +4,27 @@ const fs = require('fs');
 module.exports = {
     getDataPosting: async (req, res) => {
         try {
-            let result = await dbQuery(`select p.idposting, p.images, p.caption,p.add_date, x.username as user_name_post
+            let resultPost = await dbQuery(`select p.idposting, p.images, p.caption,p.add_date, x.username as user_name_post
             from posting p left join users x on x.idusers = p.user_id;`);
-            // console.log(result)
 
-            // let comment = await dbQuery(`select c.idcomment,c.posting_id,comment,u.fullname as user_name_comment 
-            // from comment c left join users u on u.idusers=c.user_comment_id group by posting_id`);
-             
-            // let comment = await dbQuery(`select c.idcomment,c.posting_id,comment,u.fullname as user_name_comment 
-            // from comment c left join users u on u.idusers=c.user_comment_id`)
+            let postComments = await Promise.all(resultPost.map(async(post)=>{
+                let comment = await dbQuery(`select c.idcomment,c.posting_id,comment,u.fullname as user_name_comment from comment c left join users u on u.idusers=c.user_comment_id where posting_id = ${post.idposting}`);
+                if(comment.length > 0){
+                    post['comment']= comment 
+                }
+                return post
+            })) 
 
-            // let newData = result.map(async(val)=>{
-            //     let data = []
-            //     let comment = await dbQuery(`select c.idcomment,c.posting_id,comment,u.fullname as user_name_comment 
-            //     from comment c left join users u on u.idusers=c.user_comment_id where posting_id = ${val.idposting}`)
+            let postCommentsLikes = await Promise.all(postComments.map(async(postCom)=>{
+                let getLikes = await dbQuery(`select l.id, l.postId, u.fullname as user_name_likes from likes l left join users u on u.idusers=l.userId where postId = ${postCom.idposting}`)
+                if(getLikes.length > 0){
+                    postCom['likes']= getLikes 
+                }
+                return postCom
+            }))
 
-            //     if(comment.length > 0){
-            //         data.push(JSON.stringify({...val,comment:comment}))
-            //     }
-            //     data.length >0 &&
-            //     console.log(data)
-            
-            // })
+            res.send(postComments)
 
-            // console.log(newData)
-        
-            // res.status(200).send(result)
         } catch (error) {
             console.log(error);
             res.status(500).send(error);
