@@ -4,7 +4,7 @@ const fs = require('fs');
 module.exports = {
     getDataPosting: async (req, res) => {
         try {
-            let resultPost = await dbQuery(`select p.idposting, p.images, p.caption,p.add_date, x.username as user_name_post
+            let resultPost = await dbQuery(`select p.idposting, p.images, p.caption,p.add_date, x.username as user_name_post, x.images as avatar
             from posting p left join users x on x.idusers = p.user_id;`);
 
             let postComments = await Promise.all(resultPost.map(async(post)=>{
@@ -23,7 +23,9 @@ module.exports = {
                 return postCom
             }))
 
-            res.send(postComments)
+            res.status(200).send(
+                postCommentsLikes
+            )
 
         } catch (error) {
             console.log(error);

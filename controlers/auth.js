@@ -228,19 +228,35 @@ module.exports={
     },
 
     editProfile: async(req,res)=>{
+
         try {
             let data = JSON.parse(req.body.data)
-            let dataInput = []
-            for (const key in data) {
-                dataInput.push(`${key}=${dbConf.escape(data[key])}`)
+            let availableUsername = await dbQuery(`Select username from users where username = ${dbConf.escape(data.username)}`)
+            let isName = await dbQuery(`Select username from users where idusers = ${req.params.id}`)
+            console.log(isName)
+            console.log('==============================================================sini')
+            if(availableUsername.length<=0 || data.username === isName[0].username){
+                let dataInput = []
+                for (const key in data) {
+                    dataInput.push(`${key}=${dbConf.escape(data[key])}`)
+                }
+                if(req.files .length>0){
+                    dataInput.push(`images =${dbConf.escape(`/img_profile${req.files[0].filename}`)}`)
+                    await dbQuery(`UPDATE users set ${dataInput.join(',')}where idusers =${req.params.id}`)
+                }else{
+                    await dbQuery(`UPDATE users set ${dataInput.join(',')}where idusers =${req.params.id}`)
+                }
+                console.log('data',dataInput.join(','))
+                res.status(200).send({
+                    success:true,
+                    message:'Data Uploaded'
+                })
+            }else{
+                res.status(500).send({
+                    success:false,
+                    message:'Username has been used'
+                })
             }
-            dataInput.push(`images =${dbConf.escape(`/img_profile${req.files[0].filename}`)}`)
-            console.log('data',dataInput.join(','))
-            await dbQuery(`UPDATE users set ${dataInput.join(',')}where idusers =${req.params.id}`)
-            res.status(200).send({
-                success:true,
-                message:'Picture Uploaded'
-            })
         } catch (error) {
             console.log(error)
         }
