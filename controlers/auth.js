@@ -139,8 +139,8 @@ module.exports={
 
     verification : async(req,res)=>{
         let isToken = await dbQuery(`SELECT * FROM users where token =${dbConf.escape(req.token)}`)
-        if(isToken.length > 0){
-            try {
+        try {
+            if(isToken.length > 0){
                 if(req.dataToken.idusers){
                     // update status user
                     await dbQuery(`UPDATE users set status_id=1 WHERE idusers=${dbConf.escape(req.dataToken.idusers)}`)
@@ -158,25 +158,46 @@ module.exports={
                                 ...resultUser[0],
                                 token
                             },
-                            error:''
                         })
                     }
                 }
-            } catch (error) {
-                console.log(error)
+        }else{
+            let resultUser = await dbQuery(`Select u.idusers, u,token from users u Where idusers = ${dbConf.escape(req.dataToken.idusers)}`)
+            if(resultUser[0].token){
                 res.status(500).send({
                     success: false,
-                    message: "Failed ❌",
-                    error
+                    message: "Email has been expired",
+                    code:'EMAIL_EXPIRED'
                 });
+            }else{
+                if(resultUser.length > 0){
+                    // 3. login berhasil, maka buar token baru
+                    let token = createToken({...resultUser[0]})
+                    res.status(200).send({
+                        success :true,
+                        message:'Login Success',
+                        dataLogin :{
+                            ...resultUser[0],
+                            token
+                        },
+                        error:''
+                    })
+                }
             }
-        }else{
             res.status(500).send({
                 success: false,
                 message: "Email has been expired",
                 code:'EMAIL_EXPIRED'
             });
         }
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: "Failed ❌",
+            error
+        });
+    }
     },
 
     resendEmail : async(req,res)=>{
