@@ -1,5 +1,4 @@
 const { dbConf, dbQuery } = require('../config/db');
-const fs = require('fs');
 
 module.exports = {
     getDataPosting: async (req, res) => {

@@ -30,8 +30,10 @@ dbConf.getConnection((err,connection)=>{
 })
 
 // Config Routers
-const{authRouter, postingRouter}=require('./routers');
+const{authRouter, postingRouter,commentRouter,likeRouter}=require('./routers');
 app.use('/auth', authRouter)
 app.use('/posting',postingRouter)
+app.use('/comment',commentRouter)
+app.use('/like',likeRouter)
 
 app.listen(PORT,()=>console.log(`Running SOSMED API at ${PORT}`));

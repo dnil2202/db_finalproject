@@ -31,8 +31,7 @@ module.exports={
                     let sqlGet=await dbQuery(`Select idusers, email, status_id from users where idusers=${sqlInsert.insertId}`)
                     // Generate Token
                     let token = createToken({...sqlGet[0]}, '1h')
-               
-                    
+
                     // Mengirimkan Email
                     await transport.sendMail({
                         from :'SOSMED ADMIN',
@@ -151,6 +150,7 @@ module.exports={
                     if(resultUser.length > 0){
                         // 3. login berhasil, maka buar token baru
                         let token = createToken({...resultUser[0]})
+
                         res.status(200).send({
                             success :true,
                             message:'Login Success',
@@ -162,7 +162,9 @@ module.exports={
                     }
                 }
         }else{
-            let resultUser = await dbQuery(`Select u.idusers, u,token from users u Where idusers = ${dbConf.escape(req.dataToken.idusers)}`)
+            let resultUser = await dbQuery(`Select u.idusers, u.token from users u Where idusers = ${dbConf.escape(req.dataToken.idusers)}`)
+            console.log(resultUser)
+            console.log('=========================================dsini')
             if(resultUser[0].token){
                 res.status(500).send({
                     success: false,
@@ -171,6 +173,7 @@ module.exports={
                 });
             }else{
                 if(resultUser.length > 0){
+                     await dbQuery(`UPDATE users set status_id=1 WHERE idusers=${dbConf.escape(req.dataToken.idusers)}`)
                     // 3. login berhasil, maka buar token baru
                     let token = createToken({...resultUser[0]})
                     res.status(200).send({
@@ -184,11 +187,7 @@ module.exports={
                     })
                 }
             }
-            res.status(500).send({
-                success: false,
-                message: "Email has been expired",
-                code:'EMAIL_EXPIRED'
-            });
+      
         }
     } catch (error) {
         console.log(error)
@@ -233,8 +232,6 @@ module.exports={
             let data = JSON.parse(req.body.data)
             let availableUsername = await dbQuery(`Select username from users where username = ${dbConf.escape(data.username)}`)
             let isName = await dbQuery(`Select username from users where idusers = ${req.params.id}`)
-            console.log(isName)
-            console.log('==============================================================sini')
             if(availableUsername.length<=0 || data.username === isName[0].username){
                 let dataInput = []
                 for (const key in data) {
