@@ -15,12 +15,25 @@ module.exports = {
             })) 
 
             let postCommentsLikes = await Promise.all(postComments.map(async(postCom)=>{
-                let getLikes = await dbQuery(`select l.id, l.postId, u.fullname as user_name_likes from likes l left join users u on u.idusers=l.userId where postId = ${postCom.idposting}`)
+                let getLikes = await dbQuery(`select l.id, l.postId,l.action,u.idusers, u.fullname as user_name_likes from likes l left join users u on u.idusers=l.userId where postId = ${postCom.idposting}`)
                 if(getLikes.length > 0){
                     postCom['likes']= getLikes 
                 }
                 return postCom
             }))
+
+            // console.log(req.query)
+            // let filter=req.query
+            // let filterPosting = postCommentsLikes.filter((val)=>{
+            //     let valid = true
+            //     for (const key in filter) {
+            //         // console.log(val[key])
+            //         console.log(filter[key])
+            //         valid = valid && val[key]==filter[key]
+            //     }
+            //     return valid
+            // })
+            // console.log(filterPosting)
 
             res.status(200).send(
                 postCommentsLikes

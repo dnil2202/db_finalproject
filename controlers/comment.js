@@ -30,11 +30,7 @@ module.exports={
                 })
             }
         } catch (error) {
-            res.status(500).send({
-                success :false,
-                message:error
-            })
-            
+            console.log(error)
         }
 
     },
