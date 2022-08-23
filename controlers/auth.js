@@ -5,16 +5,29 @@ const fs = require('fs')
 
 
 module.exports={
-    getData:(req,res)=>{
-        dbConf.query(`Select * from users u JOIN status s on u.status_id = s.idstatus;`, 
-        (err,results)=>{
-            if(err){
-                console.log(err)
-                res.status(500).send(err)
+    getData:async (req,res)=>{
+        try {
+            // let dataUser = await dbQuery(`Select * from users u JOIN status s on u.status_id = s.idstatus;`)
+            let filter=[]
+            for (const key in req.query) {
+                filter.push(`${key}=${dbConf.escape(req.query[key])}`)
             }
-            console.log('Result sql',results)
-            res.status(200).send(results)
-        })
+            let dataUser = `Select * from users u JOIN status s on u.status_id = s.idstatus
+            ${filter.length === 0 ?'':`where ${filter.join('AND')}`};`
+            result = await dbQuery(dataUser)
+            res.status(200).send(result)
+        } catch (error) {
+            console.log(error)
+            console.log('===============================================')
+            
+            res.status(500).send(error)
+        }
+
+
+            
+
+       
+
     },
 
     register:async(req,res)=>{
@@ -299,10 +312,23 @@ module.exports={
                 }else{
                     await dbQuery(`UPDATE users set ${dataInput.join(',')}where idusers =${req.params.id}`)
                 }
-                console.log('data',dataInput.join(','))
-                res.status(200).send({
-                    success:true,
-                    message:'Data Uploaded'
+                    let resultsUser = await dbQuery(`Select u.idusers, u.fullname, u.username, u.bio, u.email, u.images, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
+                     WHERE u.idusers=${req.params.id}`)
+
+                   let resultsPost = await dbQuery(`Select u.idusers, p.idposting, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
+                    WHERE u.idusers = ${dbConf.escape(resultsUser[0].idusers)};`)
+    
+                    let resultsLike = await dbQuery(`Select u.idusers, u.username,l.id,l.postId from users u join likes l on l.userId = u.idusers
+                    Where u.idusers = ${dbConf.escape(resultsUser[0].idusers)};`)
+                    
+                    let token = createToken({...resultsUser[0]})
+                    // console.log({...resultsUser[0],post:resultsPost,like:resultsLike, token})
+                    // console.log('================================================ POST')
+                    res.status(200).send({
+                    ...resultsUser[0],
+                    posting:resultsPost,
+                    like:resultsLike,
+                    token
                 })
             }else{
                 res.status(500).send({
