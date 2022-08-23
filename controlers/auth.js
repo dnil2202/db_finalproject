@@ -51,56 +51,167 @@ module.exports={
                         to:sqlGet[0].email,
                         subject:'verification email account',
                         html:`<div>
-                        <body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #deeafa;color: #000000">
-
-  <table id="u_body" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #deeafa;width:100%" cellpadding="0" cellspacing="0">
-  <tbody>
-  <tr style="vertical-align: top">
-    <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
-  <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
-    <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
-      
-<div class="u-col u-col-100" style="max-width: 320px;min-width: 600px;display: table-cell;vertical-align: top;">
-  <div style="height: 100%;width: 100% !important;border-radius: 0px;-webkit-border-radius: 0px; -moz-border-radius: 0px;">
-  
-<table id="u_content_text_1" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:60px 30px 20px;font-family:'Raleway',sans-serif;" align="left">
-        
-  <div class="v-text-align" style="line-height: 160%; text-align: justify; word-wrap: break-word;">
-  <img style="height:100px" src="https://cdn.dribbble.com/users/946315/screenshots/10829471/media/c5aaa5f4bed31b330293ad9044a453f6.png"/>
-    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 18px; line-height: 28.8px;">Selamat Datang!</span></strong></p>
-
-<p style="font-size: 14px; line-height: 160%;"><br />Dear <strong>${fullname}</strong></p>
-<p style="font-size: 14px; line-height: 160%;">Welcome to Guild</p>
-<p style="font-size: 14px; line-height: 160%;"><br />Please confirm your email address by clicking the button below.</p>
-  </div>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="u_content_button_1" style="font-family:'Raleway',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-  <tbody>
-    <tr>
-      <td class="v-container-padding-padding" style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:'Raleway',sans-serif;" align="left">
-        
-<div class="v-text-align" align="center">
-    <a href="${process.env.FE_URL}/verification/${token}" target="_blank" class="v-size-width" style="box-sizing: border-box;display: inline-block;font-family:'Raleway',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #001847; border-radius: 4px;-webkit-border-radius: 4px; -moz-border-radius: 4px; width:28%; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
-      <span  style="display:block;padding:10px 20px;line-height:120%;">Verified Account</span>
-    </a>
-  </div>
-</div>
-    </div>
-  </div>
-</div>
-    </td>
-  </tr>
-  </tbody>
-  </table>
-</body>
+                        <body style="width:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;padding:0;Margin:0"> 
+                        <div class="es-wrapper-color" style="background-color:#EEEEEE"><!--[if gte mso 9]>
+                                  <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+                                      <v:fill type="tile" color="#eeeeee"></v:fill>
+                                  </v:background>
+                              <![endif]--> 
+                         <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top"> 
+                           <tr style="border-collapse:collapse"> 
+                            <td valign="top" style="padding:0;Margin:0"> 
+                             <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%"> 
+                               <tr style="border-collapse:collapse"> 
+                                <td align="center" style="padding:0;Margin:0"> 
+                                 <table class="es-content-body" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px" cellspacing="0" cellpadding="0" align="center"> 
+                                   <tr style="border-collapse:collapse"> 
+                                    <td align="left" style="Margin:0;padding-left:10px;padding-right:10px;padding-top:15px;padding-bottom:15px"><!--[if mso]><table style="width:580px" cellpadding="0" cellspacing="0"><tr><td style="width:282px" valign="top"><![endif]--> 
+                                     <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td align="left" style="padding:0;Margin:0;width:282px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td class="es-infoblock es-m-txt-c" align="left" style="padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica\ neue', helvetica, sans-serif;line-height:14px;color:#CCCCCC;font-size:12px">Put your preheader text here<br></p></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table><!--[if mso]></td><td style="width:20px"></td><td style="width:278px" valign="top"><![endif]--> 
+                                     <table class="es-right" cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td align="left" style="padding:0;Margin:0;width:278px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td class="es-infoblock es-m-txt-c" align="right" style="padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:14px;color:#CCCCCC;font-size:12px"><a href="https://viewstripo.email" class="view" target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;color:#CCCCCC;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif">View in browser</a></p></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table><!--[if mso]></td></tr></table><![endif]--></td> 
+                                   </tr> 
+                                 </table></td> 
+                               </tr> 
+                             </table> 
+                             <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%"> 
+                               <tr style="border-collapse:collapse"></tr> 
+                               <tr style="border-collapse:collapse"> 
+                                <td align="center" style="padding:0;Margin:0"> 
+                                 <table class="es-header-body" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#044767;width:600px" cellspacing="0" cellpadding="0" bgcolor="#044767" align="center"> 
+                                   <tr style="border-collapse:collapse"> 
+                                    <td align="left" style="Margin:0;padding-top:35px;padding-bottom:35px;padding-left:35px;padding-right:35px"><!--[if mso]><table style="width:530px" cellpadding="0" cellspacing="0"><tr><td style="width:340px" valign="top"><![endif]--> 
+                                     <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td class="es-m-p0r es-m-p20b" valign="top" align="center" style="padding:0;Margin:0;width:340px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td class="es-m-txt-c" align="left" style="padding:0;Margin:0;padding-bottom:15px"><h1 style="Margin:0;line-height:72px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:36px;font-style:normal;font-weight:bold;color:#ffffff">GUILD</h1></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table><!--[if mso]></td><td style="width:20px"></td><td style="width:170px" valign="top"><![endif]--> 
+                                     <table cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                       <tr class="es-hidden" style="border-collapse:collapse"> 
+                                        <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:170px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td style="padding:0;Margin:0;padding-bottom:5px;font-size:0" align="center"> 
+                                             <table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                               <tr style="border-collapse:collapse"> 
+                                                <td style="padding:0;Margin:0;border-bottom:1px solid #044767;background:#FFFFFF none repeat scroll 0% 0%;height:1px;width:100%;margin:0px"></td> 
+                                               </tr> 
+                                             </table></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td style="padding:0;Margin:0"> 
+                                             <table cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                               <tr style="border-collapse:collapse"> 
+                                                <td align="center" style="padding:0;Margin:0;display:none"></td> 
+                                               </tr> 
+                                             </table></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table><!--[if mso]></td></tr></table><![endif]--></td> 
+                                   </tr> 
+                                 </table></td> 
+                               </tr> 
+                             </table> 
+                             <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%"> 
+                               <tr style="border-collapse:collapse"> 
+                                <td align="center" style="padding:0;Margin:0"> 
+                                 <table class="es-content-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px"> 
+                                   <tr style="border-collapse:collapse"> 
+                                    <td style="Margin:0;padding-bottom:35px;padding-left:35px;padding-right:35px;padding-top:40px;background-color:#f7f7f7" bgcolor="#f7f7f7" align="left"> 
+                                     <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td valign="top" align="center" style="padding:0;Margin:0;width:530px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td style="Margin:0;padding-top:20px;padding-bottom:25px;padding-left:35px;padding-right:35px;font-size:0px" align="center"><a target="_blank" href="https://viewstripo.email/" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;color:#ED8E20;font-size:15px"><img src="https://avatars.githubusercontent.com/u/42573040?s=200&v=4" alt="ship" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" title="ship" width="150"></a></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td align="center" style="padding:0;Margin:0;padding-bottom:15px"><h2 style="Margin:0;line-height:36px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:30px;font-style:normal;font-weight:bold;color:#333333">GUILD<br></h2></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td class="es-m-txt-l" align="left" style="padding:0;Margin:0;padding-top:20px"><h3 style="Margin:0;line-height:22px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:18px;font-style:normal;font-weight:bold;color:#333333">Hello NAME,<br></h3></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td align="left" style="padding:0;Margin:0;padding-bottom:10px;padding-top:15px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:23px;color:#333333;font-size:15px">Welcome to Guild</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:23px;color:#333333;font-size:15px"><br>Please confirm your email address by clicking the button below.<br></p></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td align="center" style="Margin:0;padding-left:10px;padding-right:10px;padding-bottom:20px;padding-top:25px"><span class="es-button-border" style="border-style:solid;border-color:transparent;background:#ed8e20;border-width:0px;display:inline-block;border-radius:5px;width:auto"><a href="${process.env.FE_URL}/verification/${token}" class="es-button es-button-1661256457075" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#ffffff;font-size:18px;border-style:solid;border-color:#ed8e20;border-width:15px 30px;display:inline-block;background:#ed8e20;border-radius:5px;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-weight:normal;font-style:normal;line-height:22px;width:auto;text-align:center">CONFIRM</a></span></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table></td> 
+                                   </tr> 
+                                 </table></td> 
+                               </tr> 
+                             </table> 
+                             <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top"> 
+                               <tr style="border-collapse:collapse"> 
+                                <td align="center" style="padding:0;Margin:0"> 
+                                 <table class="es-footer-body" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px"> 
+                                   <tr style="border-collapse:collapse"> 
+                                    <td align="left" style="Margin:0;padding-top:35px;padding-left:35px;padding-right:35px;padding-bottom:40px"> 
+                                     <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td valign="top" align="center" style="padding:0;Margin:0;width:530px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td style="padding:0;Margin:0;padding-bottom:15px;font-size:0px" align="center"><img src="https://avatars.githubusercontent.com/u/42573040?s=200&amp;v=4" alt="Beretun logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" title="Beretun logo" width="37"></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td align="center" style="padding:0;Margin:0;padding-bottom:35px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px"><strong>675 Massachusetts Avenue </strong></p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px"><strong>Cambridge, MA 02139</strong></p></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td esdev-links-color="#777777" class="es-m-txt-c" align="center" style="padding:0;Margin:0;padding-bottom:5px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#777777;font-size:14px">if your account is verified, please ignore this email or&nbsp;<u><a target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;color:#777777;font-size:14px" class="unsubscribe" href="">unsubscribe</a></u>.</p></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table></td> 
+                                   </tr> 
+                                 </table></td> 
+                               </tr> 
+                             </table> 
+                             <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%"> 
+                               <tr style="border-collapse:collapse"> 
+                                <td align="center" style="padding:0;Margin:0"> 
+                                 <table class="es-content-body" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px" cellspacing="0" cellpadding="0" align="center"> 
+                                   <tr style="border-collapse:collapse"> 
+                                    <td align="left" style="Margin:0;padding-left:20px;padding-right:20px;padding-top:30px;padding-bottom:30px"> 
+                                     <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td valign="top" align="center" style="padding:0;Margin:0;width:560px"> 
+                                        </td> 
+                                       </tr> 
+                                     </table></td> 
+                                   </tr> 
+                                 </table></td> 
+                               </tr> 
+                             </table></td> 
+                           </tr> 
+                         </table> 
+                        </div>  
+                       </body>
                         </div>`
                     })
                     setTimeout(()=>{
@@ -178,6 +289,7 @@ module.exports={
             res.status(500).send(error)
         }
     },
+    
 
     keepLogin:async (req,res)=>{
         try {
@@ -280,9 +392,168 @@ module.exports={
                     to:sqlInsert[0].email,
                     subject:'verification email account',
                     html:`<div>
-                    <h3> Click Link below</h3>
-                    <a href='${process.env.FE_URL}/verification/${sqlInsert[0].token}'>Verified Account</a>
-                    </div>`
+                        <body style="width:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;padding:0;Margin:0"> 
+                        <div class="es-wrapper-color" style="background-color:#EEEEEE"><!--[if gte mso 9]>
+                                  <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+                                      <v:fill type="tile" color="#eeeeee"></v:fill>
+                                  </v:background>
+                              <![endif]--> 
+                         <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top"> 
+                           <tr style="border-collapse:collapse"> 
+                            <td valign="top" style="padding:0;Margin:0"> 
+                             <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%"> 
+                               <tr style="border-collapse:collapse"> 
+                                <td align="center" style="padding:0;Margin:0"> 
+                                 <table class="es-content-body" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px" cellspacing="0" cellpadding="0" align="center"> 
+                                   <tr style="border-collapse:collapse"> 
+                                    <td align="left" style="Margin:0;padding-left:10px;padding-right:10px;padding-top:15px;padding-bottom:15px"><!--[if mso]><table style="width:580px" cellpadding="0" cellspacing="0"><tr><td style="width:282px" valign="top"><![endif]--> 
+                                     <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td align="left" style="padding:0;Margin:0;width:282px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td class="es-infoblock es-m-txt-c" align="left" style="padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica\ neue', helvetica, sans-serif;line-height:14px;color:#CCCCCC;font-size:12px">Put your preheader text here<br></p></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table><!--[if mso]></td><td style="width:20px"></td><td style="width:278px" valign="top"><![endif]--> 
+                                     <table class="es-right" cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td align="left" style="padding:0;Margin:0;width:278px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td class="es-infoblock es-m-txt-c" align="right" style="padding:0;Margin:0;line-height:14px;font-size:12px;color:#CCCCCC"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:14px;color:#CCCCCC;font-size:12px"><a href="https://viewstripo.email" class="view" target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;color:#CCCCCC;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-serif">View in browser</a></p></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table><!--[if mso]></td></tr></table><![endif]--></td> 
+                                   </tr> 
+                                 </table></td> 
+                               </tr> 
+                             </table> 
+                             <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%"> 
+                               <tr style="border-collapse:collapse"></tr> 
+                               <tr style="border-collapse:collapse"> 
+                                <td align="center" style="padding:0;Margin:0"> 
+                                 <table class="es-header-body" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#044767;width:600px" cellspacing="0" cellpadding="0" bgcolor="#044767" align="center"> 
+                                   <tr style="border-collapse:collapse"> 
+                                    <td align="left" style="Margin:0;padding-top:35px;padding-bottom:35px;padding-left:35px;padding-right:35px"><!--[if mso]><table style="width:530px" cellpadding="0" cellspacing="0"><tr><td style="width:340px" valign="top"><![endif]--> 
+                                     <table class="es-left" cellspacing="0" cellpadding="0" align="left" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td class="es-m-p0r es-m-p20b" valign="top" align="center" style="padding:0;Margin:0;width:340px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td class="es-m-txt-c" align="left" style="padding:0;Margin:0;padding-bottom:15px"><h1 style="Margin:0;line-height:72px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:36px;font-style:normal;font-weight:bold;color:#ffffff">GUILD</h1></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table><!--[if mso]></td><td style="width:20px"></td><td style="width:170px" valign="top"><![endif]--> 
+                                     <table cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                       <tr class="es-hidden" style="border-collapse:collapse"> 
+                                        <td class="es-m-p20b" align="left" style="padding:0;Margin:0;width:170px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td style="padding:0;Margin:0;padding-bottom:5px;font-size:0" align="center"> 
+                                             <table width="100%" height="100%" cellspacing="0" cellpadding="0" border="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                               <tr style="border-collapse:collapse"> 
+                                                <td style="padding:0;Margin:0;border-bottom:1px solid #044767;background:#FFFFFF none repeat scroll 0% 0%;height:1px;width:100%;margin:0px"></td> 
+                                               </tr> 
+                                             </table></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td style="padding:0;Margin:0"> 
+                                             <table cellspacing="0" cellpadding="0" align="right" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                               <tr style="border-collapse:collapse"> 
+                                                <td align="center" style="padding:0;Margin:0;display:none"></td> 
+                                               </tr> 
+                                             </table></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table><!--[if mso]></td></tr></table><![endif]--></td> 
+                                   </tr> 
+                                 </table></td> 
+                               </tr> 
+                             </table> 
+                             <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%"> 
+                               <tr style="border-collapse:collapse"> 
+                                <td align="center" style="padding:0;Margin:0"> 
+                                 <table class="es-content-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px"> 
+                                   <tr style="border-collapse:collapse"> 
+                                    <td style="Margin:0;padding-bottom:35px;padding-left:35px;padding-right:35px;padding-top:40px;background-color:#f7f7f7" bgcolor="#f7f7f7" align="left"> 
+                                     <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td valign="top" align="center" style="padding:0;Margin:0;width:530px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td style="Margin:0;padding-top:20px;padding-bottom:25px;padding-left:35px;padding-right:35px;font-size:0px" align="center"><a target="_blank" href="https://viewstripo.email/" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;color:#ED8E20;font-size:15px"><img src="https://avatars.githubusercontent.com/u/42573040?s=200&v=4" alt="ship" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" title="ship" width="150"></a></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td align="center" style="padding:0;Margin:0;padding-bottom:15px"><h2 style="Margin:0;line-height:36px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:30px;font-style:normal;font-weight:bold;color:#333333">GUILD<br></h2></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td class="es-m-txt-l" align="left" style="padding:0;Margin:0;padding-top:20px"><h3 style="Margin:0;line-height:22px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:18px;font-style:normal;font-weight:bold;color:#333333">Hello NAME,<br></h3></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td align="left" style="padding:0;Margin:0;padding-bottom:10px;padding-top:15px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:23px;color:#333333;font-size:15px">Welcome to Guild</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:23px;color:#333333;font-size:15px"><br>Please confirm your email address by clicking the button below.<br></p></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td align="center" style="Margin:0;padding-left:10px;padding-right:10px;padding-bottom:20px;padding-top:25px"><span class="es-button-border" style="border-style:solid;border-color:transparent;background:#ed8e20;border-width:0px;display:inline-block;border-radius:5px;width:auto"><a href="${process.env.FE_URL}/verification/${sqlInsert[0].token}" class="es-button es-button-1661256457075" target="_blank" style="mso-style-priority:100 !important;text-decoration:none;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;color:#ffffff;font-size:18px;border-style:solid;border-color:#ed8e20;border-width:15px 30px;display:inline-block;background:#ed8e20;border-radius:5px;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-weight:normal;font-style:normal;line-height:22px;width:auto;text-align:center">CONFIRM</a></span></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table></td> 
+                                   </tr> 
+                                 </table></td> 
+                               </tr> 
+                             </table> 
+                             <table class="es-footer" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;background-color:transparent;background-repeat:repeat;background-position:center top"> 
+                               <tr style="border-collapse:collapse"> 
+                                <td align="center" style="padding:0;Margin:0"> 
+                                 <table class="es-footer-body" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px"> 
+                                   <tr style="border-collapse:collapse"> 
+                                    <td align="left" style="Margin:0;padding-top:35px;padding-left:35px;padding-right:35px;padding-bottom:40px"> 
+                                     <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td valign="top" align="center" style="padding:0;Margin:0;width:530px"> 
+                                         <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td style="padding:0;Margin:0;padding-bottom:15px;font-size:0px" align="center"><img src="https://avatars.githubusercontent.com/u/42573040?s=200&amp;v=4" alt="Beretun logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" title="Beretun logo" width="37"></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td align="center" style="padding:0;Margin:0;padding-bottom:35px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px"><strong>675 Massachusetts Avenue </strong></p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#333333;font-size:14px"><strong>Cambridge, MA 02139</strong></p></td> 
+                                           </tr> 
+                                           <tr style="border-collapse:collapse"> 
+                                            <td esdev-links-color="#777777" class="es-m-txt-c" align="center" style="padding:0;Margin:0;padding-bottom:5px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:21px;color:#777777;font-size:14px">if your account is verified, please ignore this email or&nbsp;<u><a target="_blank" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;text-decoration:none;color:#777777;font-size:14px" class="unsubscribe" href="">unsubscribe</a></u>.</p></td> 
+                                           </tr> 
+                                         </table></td> 
+                                       </tr> 
+                                     </table></td> 
+                                   </tr> 
+                                 </table></td> 
+                               </tr> 
+                             </table> 
+                             <table class="es-content" cellspacing="0" cellpadding="0" align="center" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%"> 
+                               <tr style="border-collapse:collapse"> 
+                                <td align="center" style="padding:0;Margin:0"> 
+                                 <table class="es-content-body" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:transparent;width:600px" cellspacing="0" cellpadding="0" align="center"> 
+                                   <tr style="border-collapse:collapse"> 
+                                    <td align="left" style="Margin:0;padding-left:20px;padding-right:20px;padding-top:30px;padding-bottom:30px"> 
+                                     <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px"> 
+                                       <tr style="border-collapse:collapse"> 
+                                        <td valign="top" align="center" style="padding:0;Margin:0;width:560px"> 
+                                        </td> 
+                                       </tr> 
+                                     </table></td> 
+                                   </tr> 
+                                 </table></td> 
+                               </tr> 
+                             </table></td> 
+                           </tr> 
+                         </table> 
+                        </div>  
+                       </body>
+                        </div>`
                 })
                 res.status(200).send({
                     success: true,
