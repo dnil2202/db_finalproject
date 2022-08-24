@@ -2,9 +2,18 @@ const { dbConf, dbQuery } = require('../config/db');
 
 module.exports = {
     getDataPosting: async (req, res) => {
+        console.log(req.query)
         try {
+            let {page, pageSize}=req.query
+            page = parseInt(page)
+            pageSize = parseInt(pageSize)
+            let offset = (page -1)*pageSize
+            console.log(offset,pageSize)
+            
+            
             let resultPost = await dbQuery(`select p.idposting, p.images, p.caption,p.add_date, x.username as user_name_post, x.images as avatar
-            from posting p left join users x on x.idusers = p.user_id;`);
+            from posting p left join users x on x.idusers = p.user_id Order BY add_date DESC Limit ${pageSize} offset ${offset} ;`);
+            console.log(resultPost.length)
 
             let postComments = await Promise.all(resultPost.map(async(post)=>{
                 let comment = await dbQuery(`select c.idcomment,c.posting_id,comment,u.fullname as user_name_comment from comment c left join users u on u.idusers=c.user_comment_id where posting_id = ${post.idposting}`);
@@ -21,19 +30,6 @@ module.exports = {
                 }
                 return postCom
             }))
-
-            // console.log(req.query)
-            // let filter=req.query
-            // let filterPosting = postCommentsLikes.filter((val)=>{
-            //     let valid = true
-            //     for (const key in filter) {
-            //         // console.log(val[key])
-            //         console.log(filter[key])
-            //         valid = valid && val[key]==filter[key]
-            //     }
-            //     return valid
-            // })
-            // console.log(filterPosting)
 
             res.status(200).send(
                 postCommentsLikes
@@ -111,4 +107,47 @@ module.exports = {
             res.status(500).send(error);
         }
     },
+
+    getDataPostingById : async (req,res)=>{
+
+        try {
+            let {page, pageSize}=req.query
+            page = parseInt(page)
+            pageSize = parseInt(pageSize)
+            let offset = (page -1)*pageSize
+            console.log(offset,pageSize)
+
+            let resultPost = await dbQuery(`select p.idposting, p.images, p.caption,p.add_date, x.username as user_name_post, x.images as avatar
+            from posting p left join users x on x.idusers = p.user_id where p.idposting = ${req.params.id}`)
+    
+            let postComments = await Promise.all(resultPost.map(async(post)=>{
+                let comment = await dbQuery(`select c.idcomment,c.posting_id,comment,u.fullname as user_name_comment from comment c left join users u on u.idusers=c.user_comment_id where posting_id = ${post.idposting} Limit ${pageSize} offset ${offset}`);
+                if(comment.length > 0){
+                    post['comment']= comment 
+                }
+                return post
+            })) 
+    
+            let postCommentsLikes = await Promise.all(postComments.map(async(postCom)=>{
+                let getLikes = await dbQuery(`select l.id, l.postId,l.action,u.idusers, u.fullname as user_name_likes from likes l left join users u on u.idusers=l.userId where postId = ${postCom.idposting}`)
+                if(getLikes.length > 0){
+                    postCom['likes']= getLikes 
+                }
+                return postCom
+            }))
+            res.status(200).send(
+                postCommentsLikes
+            )
+            
+        } catch (error) {
+            console.log(error);
+            res.status(500).send(error);
+        }
+
+       
+
+    }
+
+
+
 };
