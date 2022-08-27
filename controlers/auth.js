@@ -243,11 +243,14 @@ module.exports={
             if(loginUser.length >0){
                 let token = createToken({...loginUser[0]})
                 if(loginUser[0].status === 'Verified'){
-                    let resultsPost =await dbQuery(`Select u.idusers, p.idposting, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
+                    let resultsPost =await dbQuery(`Select u.idusers,u.images as avatar, p.idposting,  u.username as user_name_post, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
                     WHERE u.idusers = ${dbConf.escape(loginUser[0].idusers)};`)
 
-                    let resultsLike = await dbQuery(`Select u.idusers, u.username,l.id,l.postId from users u join likes l on l.userId = u.idusers
-                    Where u.idusers = ${dbConf.escape(loginUser[0].idusers)};`)
+                    // let resultsLike = await dbQuery(`Select u.idusers, u.username,l.id,l.postId from users u join likes l on l.userId = u.idusers
+                    // Where u.idusers = ${dbConf.escape(loginUser[0].idusers)};`)
+
+                    let resultsLike = await dbQuery(`Select u.idusers,u.username,p.idposting,p.add_date,p.images,l.id,l.postId from users u JOIN likes l ON u.idusers=l.userId 
+                    JOIN posting p ON p.idposting = l.postId WHERE l.userId =${dbConf.escape(loginUser[0].idusers)};`)
                     setTimeout(()=>{
                         res.status(200).send({
                                ...loginUser[0],
@@ -257,7 +260,7 @@ module.exports={
                            })
                     },3000)
                 }else{
-                    let resultsPost =await dbQuery(`Select u.idusers, p.idposting, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
+                    let resultsPost =await dbQuery(`Select u.idusers, p.idposting, u.username as user_name_post, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
                     WHERE u.idusers = ${dbConf.escape(loginUser[0].idusers)};`)
                     await dbQuery(`UPDATE users set token=${dbConf.escape(token)} WHERE idusers=${dbConf.escape(loginUser[0].idusers)}`)
 
@@ -292,11 +295,17 @@ module.exports={
             WHERE u.idusers=${dbConf.escape(req.dataToken.idusers)}`)
 
             if(resultsUser.length >0){
-               let resultsPost = await dbQuery(`Select u.idusers, p.idposting, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
-                WHERE u.idusers = ${dbConf.escape(resultsUser[0].idusers)};`)
+              let resultsPost =await dbQuery(`Select u.idusers,u.images as avatar, p.idposting,  u.username as user_name_post, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
+              WHERE u.idusers = ${dbConf.escape(resultsUser[0].idusers)};`)
 
-                let resultsLike = await dbQuery(`Select u.idusers, u.username,l.id,l.postId from users u join likes l on l.userId = u.idusers
-                Where u.idusers = ${dbConf.escape(resultsUser[0].idusers)};`)
+                // let resultsLike = await dbQuery(`Select u.idusers, u.username,l.id,l.postId from users u join likes l on l.userId = u.idusers
+                // Where u.idusers = ${dbConf.escape(resultsUser[0].idusers)};`)
+
+                // let detailLike = await dbQuery(`Select u.idusers, p.idposting, p.images,p.add_date from users u JOIN likes l ON u.idusers=l.userId 
+                //     JOIN posting p ON p.idposting = l.postId WHERE l.userId =${dbConf.escape(resultsUser[0].idusers)};`)
+
+                    let resultsLike = await dbQuery(`Select u.idusers,u.username,p.idposting,p.add_date,p.images,l.id,l.postId from users u JOIN likes l ON u.idusers=l.userId 
+                    JOIN posting p ON p.idposting = l.postId WHERE l.userId =${dbConf.escape(resultsUser[0].idusers)};`)
                 
                 let token = createToken({...resultsUser[0]})
                 res.status(200).send({

@@ -16,7 +16,7 @@ module.exports = {
             console.log(resultPost.length)
 
             let postComments = await Promise.all(resultPost.map(async(post)=>{
-                let comment = await dbQuery(`select c.idcomment,c.posting_id,comment,u.fullname as user_name_comment from comment c left join users u on u.idusers=c.user_comment_id where posting_id = ${post.idposting}`);
+                let comment = await dbQuery(`select c.idcomment,c.posting_id,comment,u.fullname as user_name_comment from comment c left join users u on u.idusers=c.user_comment_id where posting_id = ${post.idposting} Order BY created_date DESC`);
                 if(comment.length > 0){
                     post['comment']= comment 
                 }
@@ -24,9 +24,11 @@ module.exports = {
             })) 
 
             let postCommentsLikes = await Promise.all(postComments.map(async(postCom)=>{
-                let getLikes = await dbQuery(`select l.id, l.postId,l.action,u.idusers, u.fullname as user_name_likes from likes l left join users u on u.idusers=l.userId where postId = ${postCom.idposting}`)
+                let getLikes = await dbQuery(`select l.id, l.postId,u.idusers, u.fullname as user_name_likes from likes l left join users u on u.idusers=l.userId where postId = ${postCom.idposting}`)
                 if(getLikes.length > 0){
                     postCom['likes']= getLikes 
+                }else{
+                    postCom['likes']= []
                 }
                 return postCom
             }))
@@ -60,6 +62,7 @@ module.exports = {
                 )})`,
             );
             res.status(200).send({
+                newPost:addData,
                 success: true,
                 message: 'Add Posting Success',
             });
@@ -77,7 +80,9 @@ module.exports = {
             await dbQuery(
                 `DELETE from posting where idposting = ${req.params.id}`,
             );
-
+            await dbQuery(`Delete from likes where postId = ${req.params.id}`)
+            await dbQuery(`Delete from comment where posting_id = ${req.params.id}`)
+            
             res.status(200).send({
                 success: true,
                 message: 'Posting deleted',
@@ -117,11 +122,11 @@ module.exports = {
             let offset = (page -1)*pageSize
             console.log(offset,pageSize)
 
-            let resultPost = await dbQuery(`select p.idposting, p.images, p.caption,p.add_date, x.username as user_name_post, x.images as avatar
+            let resultPost = await dbQuery(`select p.idposting, p.images, p.caption, p.add_date,x.images as avatar, x.username as user_name_post, x.images as avatar
             from posting p left join users x on x.idusers = p.user_id where p.idposting = ${req.params.id}`)
     
             let postComments = await Promise.all(resultPost.map(async(post)=>{
-                let comment = await dbQuery(`select c.idcomment,c.posting_id,comment,u.fullname as user_name_comment from comment c left join users u on u.idusers=c.user_comment_id where posting_id = ${post.idposting} Limit ${pageSize} offset ${offset}`);
+                let comment = await dbQuery(`select c.idcomment,c.posting_id,comment,u.fullname as user_name_comment from comment c left join users u on u.idusers=c.user_comment_id where posting_id = ${post.idposting} Order BY created_date DESC  Limit ${pageSize} offset ${offset}`);
                 if(comment.length > 0){
                     post['comment']= comment 
                 }
@@ -129,9 +134,11 @@ module.exports = {
             })) 
     
             let postCommentsLikes = await Promise.all(postComments.map(async(postCom)=>{
-                let getLikes = await dbQuery(`select l.id, l.postId,l.action,u.idusers, u.fullname as user_name_likes from likes l left join users u on u.idusers=l.userId where postId = ${postCom.idposting}`)
+                let getLikes = await dbQuery(`select l.id, l.postId,u.idusers, u.fullname as user_name_likes from likes l left join users u on u.idusers=l.userId where postId = ${postCom.idposting} `)
                 if(getLikes.length > 0){
                     postCom['likes']= getLikes 
+                }else{
+                    postCom['likes']= []
                 }
                 return postCom
             }))
@@ -146,7 +153,20 @@ module.exports = {
 
        
 
+    },
+
+    getDataPostingByUser:async (req,res)=>{
+        console.log(req.params.id)
+        try {
+            let resultPostProfile = await dbQuery(`select p.idposting, p.images, p.caption,p.add_date, x.username as user_name_post, x.images as avatar
+            from posting p left join users x on x.idusers = p.user_id where x.idusers = ${req.params.id}`)
+            res.status(200).send(resultPostProfile)
+        } catch (error) {
+            console.log(error)
+            
+        }
     }
+    
 
 
 

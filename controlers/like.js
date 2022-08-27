@@ -14,7 +14,7 @@ module.exports={
     postLike: async(req,res)=>{
         try {
             let {postId,userId}=req.body
-            let userAction = await dbQuery(`INSERT INTO LIKES (postId,userId,action)values(${dbConf.escape(postId)},${dbConf.escape(userId)},${dbConf.escape(1)});`)
+            let userAction = await dbQuery(`INSERT INTO LIKES (postId,userId)values(${dbConf.escape(postId)},${dbConf.escape(userId)});`)
              res.status(200).send({
                 success:true,
                 message:'Add Like Success'
@@ -26,10 +26,10 @@ module.exports={
     },
     deleteLike: async(req,res)=>{
         try {
-            let userAction = await dbQuery(`Delete from likes where postId=${req.params.id}`)
+            let userAction = await dbQuery(`Delete from likes where id=${req.params.id}`)
              res.status(200).send({
                 success:true,
-                message:'Add Like Success'
+                message:'Undo Like Success'
              })
         } catch (error) {
             console.log(error)
@@ -47,4 +47,14 @@ module.exports={
             console.log(error)
         }
     },
+
+    getLikeDetailUser : async(req,res)=>{
+        try {
+            let resultsLike = await dbQuery(`Select u.idusers,u.username,u.images as avatar ,p.idposting,p.add_date,p.images,l.id,l.postId from users u JOIN likes l ON u.idusers=l.userId 
+                    JOIN posting p ON p.idposting = l.postId WHERE l.userId =${req.params.id};`)
+            res.status(200).send(resultsLike)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
