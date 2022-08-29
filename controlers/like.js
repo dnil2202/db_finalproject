@@ -51,7 +51,7 @@ module.exports={
     getLikeDetailUser : async(req,res)=>{
         try {
             let resultsLike = await dbQuery(`Select u.idusers,u.username,u.images as avatar ,p.idposting,p.add_date,p.images,l.id,l.postId from users u JOIN likes l ON u.idusers=l.userId 
-                    JOIN posting p ON p.idposting = l.postId WHERE l.userId =${req.params.id};`)
+                    JOIN newposting p ON p.idposting = l.postId WHERE l.userId =${req.params.id};`)
             res.status(200).send(resultsLike)
         } catch (error) {
             console.log(error)

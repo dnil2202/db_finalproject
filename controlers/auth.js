@@ -243,14 +243,11 @@ module.exports={
             if(loginUser.length >0){
                 let token = createToken({...loginUser[0]})
                 if(loginUser[0].status === 'Verified'){
-                    let resultsPost =await dbQuery(`Select u.idusers,u.images as avatar, p.idposting,  u.username as user_name_post, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
+                    let resultsPost =await dbQuery(`Select u.idusers,u.images as avatar, p.idposting,  u.username as user_name_post, p.images, p.caption, p.add_date from users u JOIN newposting p ON u.idusers = p.user_id
                     WHERE u.idusers = ${dbConf.escape(loginUser[0].idusers)};`)
 
-                    // let resultsLike = await dbQuery(`Select u.idusers, u.username,l.id,l.postId from users u join likes l on l.userId = u.idusers
-                    // Where u.idusers = ${dbConf.escape(loginUser[0].idusers)};`)
-
                     let resultsLike = await dbQuery(`Select u.idusers,u.username,p.idposting,p.add_date,p.images,l.id,l.postId from users u JOIN likes l ON u.idusers=l.userId 
-                    JOIN posting p ON p.idposting = l.postId WHERE l.userId =${dbConf.escape(loginUser[0].idusers)};`)
+                    JOIN newposting p ON p.idposting = l.postId WHERE l.userId =${dbConf.escape(loginUser[0].idusers)};`)
                     setTimeout(()=>{
                         res.status(200).send({
                                ...loginUser[0],
@@ -260,7 +257,7 @@ module.exports={
                            })
                     },3000)
                 }else{
-                    let resultsPost =await dbQuery(`Select u.idusers, p.idposting, u.username as user_name_post, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
+                    let resultsPost =await dbQuery(`Select u.idusers, p.idposting, u.username as user_name_post, p.images, p.caption, p.add_date from users u JOIN newposting p ON u.idusers = p.user_id
                     WHERE u.idusers = ${dbConf.escape(loginUser[0].idusers)};`)
                     await dbQuery(`UPDATE users set token=${dbConf.escape(token)} WHERE idusers=${dbConf.escape(loginUser[0].idusers)}`)
 
@@ -288,24 +285,17 @@ module.exports={
         }
     },
     
-
     keepLogin:async (req,res)=>{
         try {
             let resultsUser = await dbQuery(`Select u.idusers, u.fullname, u.username, u.bio, u.email, u.images, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
             WHERE u.idusers=${dbConf.escape(req.dataToken.idusers)}`)
 
             if(resultsUser.length >0){
-              let resultsPost =await dbQuery(`Select u.idusers,u.images as avatar, p.idposting,  u.username as user_name_post, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
+              let resultsPost =await dbQuery(`Select u.idusers,u.images as avatar, p.idposting,  u.username as user_name_post, p.images, p.caption, p.add_date from users u JOIN newposting p ON u.idusers = p.user_id
               WHERE u.idusers = ${dbConf.escape(resultsUser[0].idusers)};`)
 
-                // let resultsLike = await dbQuery(`Select u.idusers, u.username,l.id,l.postId from users u join likes l on l.userId = u.idusers
-                // Where u.idusers = ${dbConf.escape(resultsUser[0].idusers)};`)
-
-                // let detailLike = await dbQuery(`Select u.idusers, p.idposting, p.images,p.add_date from users u JOIN likes l ON u.idusers=l.userId 
-                //     JOIN posting p ON p.idposting = l.postId WHERE l.userId =${dbConf.escape(resultsUser[0].idusers)};`)
-
                     let resultsLike = await dbQuery(`Select u.idusers,u.username,p.idposting,p.add_date,p.images,l.id,l.postId from users u JOIN likes l ON u.idusers=l.userId 
-                    JOIN posting p ON p.idposting = l.postId WHERE l.userId =${dbConf.escape(resultsUser[0].idusers)};`)
+                    JOIN newposting p ON p.idposting = l.postId WHERE l.userId =${dbConf.escape(resultsUser[0].idusers)};`)
                 
                 let token = createToken({...resultsUser[0]})
                 res.status(200).send({
@@ -387,10 +377,9 @@ module.exports={
     resendEmail : async(req,res)=>{
         try {
             let {email}=req.body;
-            let sqlInsert = await dbQuery(`Select idusers, email,token, status_id  From users WHERE email =${dbConf.escape(email)}`)
-            console.log(sqlInsert[0])
-            console.log('===================================DISISNI')
+            let sqlInsert = await dbQuery(`Select idusers,fullname,email,token, status_id From users WHERE email =${dbConf.escape(email)}`)
                 // Mengirimkan Email
+                console.log(sqlInsert[0])
                 await transport.sendMail({
                     from :'SOSMED ADMIN',
                     to:sqlInsert[0].email,
@@ -496,7 +485,7 @@ module.exports={
                                             <td align="center" style="padding:0;Margin:0;padding-bottom:15px"><h2 style="Margin:0;line-height:36px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:30px;font-style:normal;font-weight:bold;color:#333333">GUILD<br></h2></td> 
                                            </tr> 
                                            <tr style="border-collapse:collapse"> 
-                                            <td class="es-m-txt-l" align="left" style="padding:0;Margin:0;padding-top:20px"><h3 style="Margin:0;line-height:22px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:18px;font-style:normal;font-weight:bold;color:#333333">Hello NAME,<br></h3></td> 
+                                            <td class="es-m-txt-l" align="left" style="padding:0;Margin:0;padding-top:20px"><h3 style="Margin:0;line-height:22px;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;font-size:18px;font-style:normal;font-weight:bold;color:#333333">Hello ${sqlInsert[0].fullname},<br></h3></td> 
                                            </tr> 
                                            <tr style="border-collapse:collapse"> 
                                             <td align="left" style="padding:0;Margin:0;padding-bottom:10px;padding-top:15px"><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:23px;color:#333333;font-size:15px">Welcome to Guild</p><p style="Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:'open sans', 'helvetica neue', helvetica, arial, sans-serif;line-height:23px;color:#333333;font-size:15px"><br>Please confirm your email address by clicking the button below.<br></p></td> 
@@ -590,15 +579,14 @@ module.exports={
                     let resultsUser = await dbQuery(`Select u.idusers, u.fullname, u.username, u.bio, u.email, u.images, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
                      WHERE u.idusers=${req.params.id}`)
 
-                   let resultsPost = await dbQuery(`Select u.idusers, p.idposting, p.images, p.caption, p.add_date from users u JOIN posting p ON u.idusers = p.user_id
+                   let resultsPost = await dbQuery(`Select u.idusers, p.idposting, p.images, p.caption, p.add_date from users u JOIN newposting p ON u.idusers = p.user_id
                     WHERE u.idusers = ${dbConf.escape(resultsUser[0].idusers)};`)
     
                     let resultsLike = await dbQuery(`Select u.idusers, u.username,l.id,l.postId from users u join likes l on l.userId = u.idusers
                     Where u.idusers = ${dbConf.escape(resultsUser[0].idusers)};`)
                     
                     let token = createToken({...resultsUser[0]})
-                    // console.log({...resultsUser[0],post:resultsPost,like:resultsLike, token})
-                    // console.log('================================================ POST')
+            
                     res.status(200).send({
                     ...resultsUser[0],
                     posting:resultsPost,
@@ -614,5 +602,7 @@ module.exports={
         } catch (error) {
             console.log(error)
         }
-    }
+    },
+
+
 }
