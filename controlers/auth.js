@@ -1,7 +1,6 @@
 const {dbConf, dbQuery}=require('../config/db');
 const {hashPassword, createToken}=require('../confiG/encript')
 const { transport } = require('../config/nodemailer');
-const fs = require('fs')
 
 
 module.exports={
@@ -234,6 +233,7 @@ module.exports={
     login:async(req,res)=>{
         try {
             let {email,password}=req.body
+            console.log(email)
 
             let loginUser = await dbQuery(`Select u.idusers, u.fullname, u.username,u.bio, u.email, u.images, u.status_id, s.status from users u JOIN status s on u.status_id=s.idstatus
             WHERE ${dbConf.escape(email).includes('@') && dbConf.escape(email).includes('.co') ?`u.email = ${dbConf.escape(email)}`: 
@@ -570,7 +570,7 @@ module.exports={
                 for (const key in data) {
                     dataInput.push(`${key}=${dbConf.escape(data[key])}`)
                 }
-                if(req.files .length>0){
+                if(req.files.length>0){
                     dataInput.push(`images =${dbConf.escape(`/img_profile${req.files[0].filename}`)}`)
                     await dbQuery(`UPDATE users set ${dataInput.join(',')}where idusers =${req.params.id}`)
                 }else{

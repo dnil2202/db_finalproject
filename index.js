@@ -8,6 +8,7 @@ const bearerToken = require('express-bearer-token')
 
 
 
+
 // untuk bisa redirect public
 app.use(express.static('public'))
 //
@@ -35,5 +36,7 @@ app.use('/auth', authRouter)
 app.use('/posting',postingRouter)
 app.use('/comment',commentRouter)
 app.use('/like',likeRouter)
+
+// app.use("/api/product",product)
 
 app.listen(PORT,()=>console.log(`Running SOSMED API at ${PORT}`));
