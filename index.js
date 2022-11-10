@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(cors())
 app.use(bearerToken())
 
-app.get('/',(req,res)=>{
+app.get('/api',(req,res)=>{
     res.status(200).send('<h1>API SOSMED</h1>')
 })
 
@@ -32,10 +32,10 @@ dbConf.getConnection((err,connection)=>{
 
 // Config Routers
 const{authRouter, postingRouter,commentRouter,likeRouter}=require('./routers');
-app.use('/auth', authRouter)
-app.use('/posting',postingRouter)
-app.use('/comment',commentRouter)
-app.use('/like',likeRouter)
+app.use('/api/auth', authRouter)
+app.use('/api/posting',postingRouter)
+app.use('/api/comment',commentRouter)
+app.use('/api/like',likeRouter)
 
 // app.use("/api/product",product)
 
